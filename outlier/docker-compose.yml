@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  outlier:
+    container_name: outlier
+    image: kooose/ml-system-in-actions:outlier_0.0.1
+    restart: always
+    environment:
+      - PLATFORM=docker_compose
+    ports:
+      - 8003:8003
+    command: ./run.sh

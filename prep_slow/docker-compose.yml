@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  prep_slow:
+    container_name: prep_slow
+    image: kooose/ml-system-in-actions:prep_slow_0.0.1
+    restart: always
+    environment:
+      - QUEUE_NAME=queue
+      - PLATFORM=docker_compose
+      - VOCAB_FILE=/prep_slow/models/en-vocab-bert.txt
+      - OUTLIER_URL=http://localhost:7003/predict
+      - MYSQL_DATABASE=log_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_PORT=3306
+      - MYSQL_SERVER=mysql
+    ports:
+      - 7000:7000
+    command: ./run.sh
+    # depends_on:
+    #   - redis
+    #   - mysql

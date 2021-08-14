@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: outlier_slow
+  namespace: outlier_slow
+  labels:
+    app: outlier_slow
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: outlier_slow
+  template:
+    metadata:
+      labels:
+        app: outlier_slow
+    spec:
+      containers:
+        - name: outlier_slow
+          image: kooose/ml-system-in-actions:outlier_slow_0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7003
+          resources:
+            limits:
+              cpu: 500m
+              memory: "300Mi"
+            requests:
+              cpu: 500m
+              memory: "300Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: outlier_slow
+  namespace: outlier_slow
+  labels:
+    app: outlier_slow
+spec:
+  ports:
+    - name: rest
+      port: 7003
+      protocol: TCP
+  selector:
+    app: outlier_slow
+
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: outlier_slow
+  namespace: outlier_slow
+  labels:
+    app: outlier_slow
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: outlier_slow
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50

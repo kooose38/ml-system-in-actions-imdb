@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  rnn:
+    container_name: rnn
+    image: kooose/ml-system-in-actions:rnn_imdb_classification_0.0.1
+    restart: always
+    environment:
+      - HTTP_PORT=8001
+      - GRPC_PORT=50051
+    ports:
+      - "8001:8001"
+      - "50051:50051"
+    entrypoint: ["./onnx_runtime_server_entrypoint.sh"]

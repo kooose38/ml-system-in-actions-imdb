@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  proxy:
+    container_name: proxy
+    image: kooose/ml-system-in-actions:proxy_0.0.1
+    restart: always
+    environment:
+      - PLATFORM=docker_compose
+      - SERVICE_FAST_MODEL=http://localhost:8000/
+      - SERVICE_SLOW_MODEL=http://localhost:7000/
+    ports:
+      - 9000:9000
+    command: ./run.sh

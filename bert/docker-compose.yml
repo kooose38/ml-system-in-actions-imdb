@@ -1,0 +1,14 @@
+version: "3"
+services:
+
+  bert:
+    container_name: bert
+    image: kooose/ml-system-in-actions:bert_imdb_classification_0.0.1
+    restart: always
+    environment:
+      - HTTP_PORT=7002
+      - GRPC_PORT=50052
+    ports:
+      - "7002:7002"
+      - "50052:50052"
+    entrypoint: ["./onnx_runtime_server_entrypoint.sh"]

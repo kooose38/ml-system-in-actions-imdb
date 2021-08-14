@@ -1,0 +1,26 @@
+version: "3"
+
+  monitor:
+    container_name: monitor
+    image: kooose/ml-system-in-actions:monitor_0.0.1
+    entrypoint:
+      [
+        "python",
+        "-m",
+        "src.backend.main",
+        "--interval",
+        "1",
+        "--threshold",
+        "0.2",
+      ]
+    restart: always
+    environment:
+      - MYSQL_DATABASE=log_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_PORT=3306
+      - MYSQL_SERVER=mysql
+    ports: 
+      - "5000:5000"
+    # depends_on:
+    #   - mysql

@@ -1,0 +1,14 @@
+version: "3"
+services:
+
+  lstm:
+    container_name: lstm
+    image: kooose/ml-system-in-actions:lstm_imdb_classification_0.0.1
+    restart: always
+    environment:
+      - HTTP_PORT=8002
+      - GRPC_PORT=50062
+    ports:
+      - "8002:8002"
+      - "50062:50062"
+    entrypoint: ["./onnx_runtime_server_entrypoint.sh"]

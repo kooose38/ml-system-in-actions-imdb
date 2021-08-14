@@ -1,0 +1,14 @@
+version: "3"
+services:
+
+  transformers:
+    container_name: transformers
+    image: kooose/ml-system-in-actions:transformers_imdb_classification_0.0.1
+    restart: always
+    environment:
+      - HTTP_PORT=7001
+      - GRPC_PORT=50061
+    ports:
+      - "7001:7001"
+      - "50061:50061"
+    entrypoint: ["./onnx_runtime_server_entrypoint.sh"]

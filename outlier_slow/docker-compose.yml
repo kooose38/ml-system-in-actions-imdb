@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  outlier_slow:
+    container_name: outlier_slow
+    image: kooose/ml-system-in-actions:outlier_slow_0.0.1
+    restart: always
+    environment:
+      - PLATFORM=docker_compose
+    ports:
+      - 7003:7003
+    command: ./run.sh

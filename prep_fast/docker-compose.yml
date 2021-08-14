@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  prep_fast:
+    container_name: prep_fast
+    image: kooose/ml-system-in-actions:prep_fast_0.0.1
+    restart: always
+    environment:
+      - PLATFORM=docker_compose
+      - SERVICE_RNN=http://localhost:8001/v1/models/rnn_imdb/versions/3:predict
+      - SERVICE_LSTM=http://localhost:8002/v1/models/lstm_imdb/versions/3:predict
+      - SERVICE_TRANSFORMERS=http://localhost:7001/v1/models/transformers_imdb/versions/3:predict
+      - OUTLIER_URL=http://localhost:8003/predict
+      - MYSQL_DATABASE=log_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_PORT=3306
+      - MYSQL_SERVER=mysql
+    ports:
+      - 8000:8000
+    command: ./run.sh
+    # depends_on: 
+    #   - mysql
